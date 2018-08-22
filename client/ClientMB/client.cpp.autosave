@@ -70,5 +70,5 @@ void Client::on_bt_bytearrysend_clicked()
     QString myValue = "test";
     Data.contains(myValue.toAscii());
     writeData(myValue.toAscii());
-    writeData(QByteArray::fromHex("FEFF0633064406270645aaaaaaaaaaaaaaaaaaaaaaaaaa"));
+    writeData(QByteArray::fromHex("01020304"));
 }

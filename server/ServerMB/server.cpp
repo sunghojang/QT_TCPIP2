@@ -70,7 +70,10 @@ void Server::readyRead()
                 buffer->remove(0, size);
                 size = 0;
                 *s = size;
+                qDebug() << data.toUpper();
                 qDebug() << data.toHex();
+                QString DataAsString = QString::fromAscii(data.data());
+                qDebug() << DataAsString;
                 emit dataReceived(data);
             }
         }
