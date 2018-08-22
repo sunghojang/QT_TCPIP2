@@ -5,6 +5,7 @@ else
 	git init
 	git config --global user.name "sunghojang"
 	git config --global user.email "sdjtei@gmail.com"
+	git config --global credential.helper cache
 	git remote add origin https://github.com/sunghojang/QT_TCPIP2.git
 	git add * 
 	git commit -m "$1"
