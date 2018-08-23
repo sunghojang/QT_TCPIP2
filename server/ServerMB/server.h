@@ -20,17 +20,31 @@ public:
     explicit Server(QWidget *parent = 0);
     ~Server();
 signals:
-    void dataReceived(QByteArray);
+    void dataReceived(QTcpSocket*,QByteArray);
 private slots:
     void newConnection();
     void disconnected();
     void readyRead();
+    void slot_receiveprocess(QTcpSocket*,QByteArray);
 private:
     Ui::Server *ui;
 private:
     QTcpServer *server;
     QHash<QTcpSocket*, QByteArray*> buffers; //We need a buffer to store data until block has completely received
     QHash<QTcpSocket*, qint32*> sizes; //We need to store the size to verify if a block has received completely
+    QHash<QTcpSocket*, qint32*> cmmprcs; // We need to store the commend history to use multi client
+    struct CommandData{
+        int STX;
+        int host;
+        QString user;
+        int cmm;
+        QString message;
+        int ETX;
+    }*cmmdata_tx;
+    enum {
+        en_Null,en_STX,en_host,en_user,en_cmm,en_message,en_ETX,
+    };
+    int RProcess;
 };
 
 #endif // SERVER_H

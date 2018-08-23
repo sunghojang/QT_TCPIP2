@@ -31,6 +31,14 @@ private slots:
 private:
     Ui::Client *ui;
     QTcpSocket *socket;
+    struct CommandData{
+        int STX;
+        int host;
+        QString user;
+        int cmm;
+        QString message;
+        int ETX;
+    }*cmmdata_tx;
 };
 
 #endif // CLIENT_H

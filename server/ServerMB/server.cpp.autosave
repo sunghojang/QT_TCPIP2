@@ -101,4 +101,11 @@ qint32 ArrayToInt(QByteArray source)
 }
 void Server::slot_receiveprocess(QTcpSocket* soket,QByteArray data){
     int prcsStep = cmmprcs.value(soket);
+    if(data.toHex() == 0x8E){
+        
+    }
+    switch(prcsStep){
+    case 0:
+        
+    }
 }

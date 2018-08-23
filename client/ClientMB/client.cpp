@@ -7,6 +7,7 @@ Client::Client(QWidget *parent) :
 {
     ui->setupUi(this);
     socket = new QTcpSocket(this);
+    cmmdata = new CommandData();
     connect(ui->bt_hostconnect  ,SIGNAL(clicked(bool))  ,this,SLOT(connectToHost())             );
     get_ipaddress();
 }
@@ -55,6 +56,7 @@ bool Client::writeData(QByteArray data)
     else
         return false;
 }
+
 QByteArray IntToArray(qint32 source) //Use qint32 to ensure that the number have 4 bytes
 {
     //Avoid use of cast, this is the Qt way to serialize objects
@@ -68,7 +70,16 @@ void Client::on_bt_bytearrysend_clicked()
 {
     QByteArray Data;
     QString myValue = "test";
+    cmmdata->STX    = 0x8E;
+    cmmdata->host   = 0xb0b0;
+    cmmdata->user   = "admin";
+    cmmdata->cmm    = 0x0001;
+    cmmdata->message.toAscii()  = "data";
+    cmmdata->ETX    = 0x8F;
     Data.contains(myValue.toAscii());
-    writeData(myValue.toAscii());
-    writeData(QByteArray::fromHex("FEFF0633064406270645aaaaaaaaaaaaaaaaaaaaaaaaaa"));
+    writeData(IntToArray(cmmdata->host));
+    writeData(cmmdata->user.toAscii());
+    writeData(IntToArray(cmmdata->cmm));
+    writeData(cmmdata->message.toAscii());
+    //writeData(QByteArray::fromHex("01020304"));
 }

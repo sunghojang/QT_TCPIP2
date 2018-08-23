@@ -27,6 +27,16 @@
      <string>State Message</string>
     </property>
    </widget>
+   <widget class="QListWidget" name="lw_clientlist">
+    <property name="geometry">
+     <rect>
+      <x>130</x>
+      <y>55</y>
+      <width>256</width>
+      <height>192</height>
+     </rect>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">

@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'server.ui'
 **
-** Created: Wed Aug 22 19:31:21 2018
+** Created: Thu Aug 23 11:20:40 2018
 **      by: Qt User Interface Compiler version 4.8.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -16,6 +16,7 @@
 #include <QtGui/QButtonGroup>
 #include <QtGui/QHeaderView>
 #include <QtGui/QLabel>
+#include <QtGui/QListWidget>
 #include <QtGui/QMainWindow>
 #include <QtGui/QMenuBar>
 #include <QtGui/QStatusBar>
@@ -29,6 +30,7 @@ class Ui_Server
 public:
     QWidget *centralWidget;
     QLabel *lb_statemessage;
+    QListWidget *lw_clientlist;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -43,6 +45,9 @@ public:
         lb_statemessage = new QLabel(centralWidget);
         lb_statemessage->setObjectName(QString::fromUtf8("lb_statemessage"));
         lb_statemessage->setGeometry(QRect(25, 25, 351, 16));
+        lw_clientlist = new QListWidget(centralWidget);
+        lw_clientlist->setObjectName(QString::fromUtf8("lw_clientlist"));
+        lw_clientlist->setGeometry(QRect(130, 55, 256, 192));
         Server->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(Server);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
