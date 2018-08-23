@@ -21,6 +21,30 @@ public:
     explicit Client(QWidget *parent = 0);
     QString get_ipaddress();
     ~Client();
+    struct CommandData{
+        int STX;
+        int host;
+        int cmm;
+        int ETX;
+        QString user;
+        QString message;
+
+    }*cmmdata_tx;
+    QByteArray parse(CommandData *src) {
+        QByteArray data;
+        QDataStream out(&data, QIODevice::WriteOnly);
+        out.setByteOrder(QDataStream::BigEndian);
+        out
+                << (qint32)sizeof(CommandData)
+                << src->STX
+                << src->host
+                << src->user.toAscii()
+                << src->cmm
+                << src->message.toAscii()
+                << src->ETX
+                   ;
+        return data;
+    }
 public slots:
     bool connectToHost();
     bool writeData(QByteArray data);
@@ -31,14 +55,7 @@ private slots:
 private:
     Ui::Client *ui;
     QTcpSocket *socket;
-    struct CommandData{
-        int STX;
-        int host;
-        QString user;
-        int cmm;
-        QString message;
-        int ETX;
-    }*cmmdata_tx;
+
 };
 
 #endif // CLIENT_H

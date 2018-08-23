@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'server.ui'
 **
-** Created: Thu Aug 23 11:20:40 2018
+** Created: Thu Aug 23 19:39:14 2018
 **      by: Qt User Interface Compiler version 4.8.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!

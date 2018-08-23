@@ -9,7 +9,7 @@ Server::Server(QWidget *parent) :
 
     server = new QTcpServer(this);
     connect(server, SIGNAL(newConnection()), SLOT(newConnection()));
-    connect(server, SIGNAL(dataReceived(QTcpSocket*,QByteArray)), SLOT(slot_receiveprocess(QTcpSocket*,QByteArray)));
+    connect(server, SIGNAL(dataReceived(QByteArray)), SLOT(slot_receiveprocess(QByteArray)));
     if (!server->listen(QHostAddress::Any, 4002)) {
         QMessageBox::critical(this, tr("Server"), tr("Unable to start the server: %1.").arg(server->errorString()));
         return;
@@ -31,10 +31,10 @@ void Server::newConnection()
         connect(socket, SIGNAL(readyRead()), SLOT(readyRead()));
         connect(socket, SIGNAL(disconnected()), SLOT(disconnected()));
         QByteArray *buffer = new QByteArray();
+        cmmdata_rx = new CommandData();
         qint32 *s = new qint32(0);
         buffers.insert(socket, buffer);
         sizes.insert(socket, s);
-        cmmprcs.insert(socket, en_Null);
         qDebug() << buffers;
 
         QList<QTcpSocket*> values = buffers.keys();
@@ -75,9 +75,10 @@ void Server::readyRead()
             {
                 size = ArrayToInt(buffer->mid(0, 4));
                 *s = size;
+                qDebug()<<"size :"<<size;
                 buffer->remove(0, 4);
             }
-            if (size > 0 && buffer->size() >= size) // If data has received completely, then emit our SIGNAL with the data
+            if (size > 0 && buffer->size() >= size) // If data has received completely
             {
                 QByteArray data = buffer->mid(0, size);
                 buffer->remove(0, size);
@@ -86,7 +87,8 @@ void Server::readyRead()
 //                qDebug() << data.toHex();
 //                QString DataAsString = QString::fromAscii(data.data());
 //                qDebug() << DataAsString;
-                emit dataReceived(socket,data);
+                slot_receiveprocess(data);
+
             }
         }
     }
@@ -99,6 +101,90 @@ qint32 ArrayToInt(QByteArray source)
     data >> temp;
     return temp;
 }
-void Server::slot_receiveprocess(QTcpSocket* soket,QByteArray data){
-    int prcsStep = cmmprcs.value(soket);
+void Server::slot_receiveprocess(QByteArray data){
+    qDebug()<<"void Server::slot_receiveprocess(QTcpSocket* soket,QByteArray data)";
+    uchar sftbyte = 4;
+    int temp4byte = 0;
+    QString tempQstring = "";
+    RProcess = en_STX;
+    while(!data.isEmpty()){
+        switch(RProcess){
+        case en_STX:
+            sftbyte = 4;
+            temp4byte = ArrayToInt(data.mid(0, sftbyte));
+            data.remove(0,sftbyte);
+            if(temp4byte == 0x8E){
+                cmmdata_rx->STX = temp4byte;
+                RProcess = en_host;
+            }
+            break;
+        case en_host:
+            sftbyte = 4;
+            temp4byte = ArrayToInt(data.mid(0, sftbyte));
+            data.remove(0,sftbyte);
+
+            cmmdata_rx->host = temp4byte;
+            RProcess = en_user;
+
+            break;
+        case en_user:
+            sftbyte = 4;
+            temp4byte = ArrayToInt(data.mid(0, sftbyte));
+            data.remove(0,sftbyte);
+            sftbyte = temp4byte;
+
+            tempQstring = QString::fromAscii(data.mid(0, sftbyte).data());
+            data.remove(0,sftbyte);
+            if(tempQstring.size() == sftbyte){
+                cmmdata_rx->user = tempQstring;
+                RProcess = en_cmm;
+            }
+            break;
+        case en_cmm:
+            sftbyte = 4;
+            temp4byte = ArrayToInt(data.mid(0, sftbyte));
+            data.remove(0,sftbyte);
+
+            cmmdata_rx->cmm = temp4byte;
+            RProcess = en_message;
+
+            break;
+
+        case en_message:
+            sftbyte = 4;
+            temp4byte = ArrayToInt(data.mid(0, sftbyte));
+            data.remove(0,sftbyte);
+            sftbyte = temp4byte;
+
+            tempQstring = QString::fromAscii(data.mid(0, sftbyte).data());
+            data.remove(0,sftbyte);
+            if(tempQstring.size() == sftbyte){
+                cmmdata_rx->message = tempQstring;
+                RProcess = en_ETX;
+            }
+            break;
+        case en_ETX:
+            sftbyte = 4;
+            temp4byte = ArrayToInt(data.mid(0, sftbyte));
+            data.remove(0,sftbyte);
+            if(temp4byte == 0x8F){
+                cmmdata_rx->ETX = temp4byte;
+                RProcess = en_STX;
+            }
+            break;
+        case en_Null:
+            break;
+        default:
+            qDebug("default case");
+            break;
+        }
+
+
+    }
+    qDebug() <<    cmmdata_rx->STX ;
+    qDebug() <<    cmmdata_rx->host;
+    qDebug() <<    cmmdata_rx->user ;
+    qDebug() <<    cmmdata_rx->cmm ;
+    qDebug() <<    cmmdata_rx->message ;
+    qDebug() <<    cmmdata_rx->ETX ;
 }

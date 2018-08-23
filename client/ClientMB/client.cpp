@@ -7,7 +7,7 @@ Client::Client(QWidget *parent) :
 {
     ui->setupUi(this);
     socket = new QTcpSocket(this);
-    cmmdata = new CommandData();
+    cmmdata_tx = new CommandData();
     connect(ui->bt_hostconnect  ,SIGNAL(clicked(bool))  ,this,SLOT(connectToHost())             );
     get_ipaddress();
 }
@@ -68,18 +68,26 @@ QByteArray IntToArray(qint32 source) //Use qint32 to ensure that the number have
 
 void Client::on_bt_bytearrysend_clicked()
 {
-    QByteArray Data;
+//    QByteArray Data;
     QString myValue = "test";
-    cmmdata->STX    = 0x8E;
-    cmmdata->host   = 0xb0b0;
-    cmmdata->user   = "admin";
-    cmmdata->cmm    = 0x0001;
-    cmmdata->message.toAscii()  = "data";
-    cmmdata->ETX    = 0x8F;
-    Data.contains(myValue.toAscii());
-    writeData(IntToArray(cmmdata->host));
-    writeData(cmmdata->user.toAscii());
-    writeData(IntToArray(cmmdata->cmm));
-    writeData(cmmdata->message.toAscii());
+    qDebug() << "sizeof qstring"<<myValue.size();
+    myValue = "test222222222222222222222222222222222e";
+    qDebug() << "sizeof qstring"<<myValue.size();
+    qDebug()<<"struct size"<<sizeof(CommandData);
+    cmmdata_tx->STX    = 0x8E;
+    cmmdata_tx->host   = 0x01;
+    cmmdata_tx->user   = "admin";
+    cmmdata_tx->cmm    = 0x02;
+    cmmdata_tx->message= "client to server message";
+    cmmdata_tx->ETX    = 0x8F;
+//    Data.contains(myValue.toAscii());
+//    writeData(IntToArray(sizeof(CommandData)));
+    qDebug() << sizeof(CommandData) ;
+//    writeData(cmmdata_tx->user.toAscii());
+    writeData(parse(cmmdata_tx));
+
+
+
+//    writeData(cmmdata_tx->message.toAscii());
     //writeData(QByteArray::fromHex("01020304"));
 }
