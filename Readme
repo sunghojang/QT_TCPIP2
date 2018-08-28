@@ -2,3 +2,8 @@ Qt4.8
 copy project https://stackoverflow.com/questions/20546750/qtcpsocket-reading-and-writing
 
 auto push
+client Qbytearry send to server
+sended data is include 'int & QString'
+
+info:
+QString is well be send 4byte Qsring Size before Qstring data array

@@ -15,20 +15,10 @@ class Server;
 class Server : public QMainWindow
 {
     Q_OBJECT
-
-public:
-    explicit Server(QWidget *parent = 0);
-    ~Server();
-signals:
-
-private slots:
-    void newConnection();
-    void disconnected();
-    void readyRead();
-    void slot_receiveprocess(QByteArray);
 private:
     Ui::Server *ui;
 private:
+    int RProcess;
     QTcpServer *server;
     QHash<QTcpSocket*, QByteArray*> buffers; //We need a buffer to store data until block has completely received
     QHash<QTcpSocket*, qint32*> sizes; //We need to store the size to verify if a block has received completely
@@ -45,7 +35,17 @@ private:
     enum {
         en_Null,en_STX,en_host,en_user,en_cmm,en_message,en_ETX,
     };
-    int RProcess;
+public:
+    explicit Server(QWidget *parent = 0);
+    ~Server();
+signals:
+     void Signal_display(CommandData *arg);
+private slots:
+    void newConnection();
+    void disconnected();
+    void readyRead();
+    void slot_receiveprocess(QByteArray);
+    void slot_Display(CommandData *arg);
 };
 
 #endif // SERVER_H

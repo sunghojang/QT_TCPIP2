@@ -70,9 +70,6 @@ void Client::on_bt_bytearrysend_clicked()
 {
 //    QByteArray Data;
     QString myValue = "test";
-    qDebug() << "sizeof qstring"<<myValue.size();
-    myValue = "test222222222222222222222222222222222e";
-    qDebug() << "sizeof qstring"<<myValue.size();
     qDebug()<<"struct size"<<sizeof(CommandData);
     cmmdata_tx->STX    = 0x8E;
     cmmdata_tx->host   = 0x01;
@@ -85,9 +82,6 @@ void Client::on_bt_bytearrysend_clicked()
     qDebug() << sizeof(CommandData) ;
 //    writeData(cmmdata_tx->user.toAscii());
     writeData(parse(cmmdata_tx));
-
-
-
 //    writeData(cmmdata_tx->message.toAscii());
     //writeData(QByteArray::fromHex("01020304"));
 }

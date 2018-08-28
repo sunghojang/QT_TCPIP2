@@ -30,6 +30,7 @@ void Server::newConnection()
         QTcpSocket *socket = server->nextPendingConnection();
         connect(socket, SIGNAL(readyRead()), SLOT(readyRead()));
         connect(socket, SIGNAL(disconnected()), SLOT(disconnected()));
+        connect(this, SIGNAL( Signal_display(CommandData*)),this, SLOT(slot_Display(CommandData*)));
         QByteArray *buffer = new QByteArray();
         cmmdata_rx = new CommandData();
         qint32 *s = new qint32(0);
@@ -170,6 +171,8 @@ void Server::slot_receiveprocess(QByteArray data){
             if(temp4byte == 0x8F){
                 cmmdata_rx->ETX = temp4byte;
                 RProcess = en_STX;
+                qDebug()<<"Signal_display(cmmdata_rx)";
+                emit Signal_display(cmmdata_rx);
             }
             break;
         case en_Null:
@@ -187,4 +190,11 @@ void Server::slot_receiveprocess(QByteArray data){
     qDebug() <<    cmmdata_rx->cmm ;
     qDebug() <<    cmmdata_rx->message ;
     qDebug() <<    cmmdata_rx->ETX ;
+}
+void Server::slot_Display(CommandData *arg){
+    qDebug()<<"void Server::slot_Display(CommandData *arg)";
+    ui->te_diplaylog->append(QString("host num : %1").arg(cmmdata_rx->host));
+    ui->te_diplaylog->append(QString("user : %1").arg(cmmdata_rx->user));
+    ui->te_diplaylog->append(QString("command : %1").arg(cmmdata_rx->cmm));
+    ui->te_diplaylog->append(QString("message : %1").arg(cmmdata_rx->message));
 }
