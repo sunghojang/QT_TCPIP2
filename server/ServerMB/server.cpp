@@ -10,10 +10,30 @@ Server::Server(QWidget *parent) :
     server = new QTcpServer(this);
     connect(server, SIGNAL(newConnection()), SLOT(newConnection()));
     connect(server, SIGNAL(dataReceived(QByteArray)), SLOT(slot_receiveprocess(QByteArray)));
-    if (!server->listen(QHostAddress::Any, 4002)) {
+
+    QString ipAddress;
+    int seletip = 0;
+        QList<QHostAddress> ipAddressesList = QNetworkInterface::allAddresses();
+        // use the first non-localhost IPv4 address
+        for (int i = 0; i < ipAddressesList.size(); ++i) {
+            if (ipAddressesList.at(i) != QHostAddress::LocalHost &&
+                ipAddressesList.at(i).toIPv4Address()) {
+                ipAddress = ipAddressesList.at(i).toString();
+                seletip = i;
+
+                break;
+            }
+        }
+        if (ipAddress.isEmpty())
+                ipAddress = QHostAddress(QHostAddress::LocalHost).toString();
+    qDebug()<<"<<<<<<<<<<<<<<<<ipAddress"<<ipAddress;
+    if (!server->listen(ipAddressesList.at(seletip), 4002)) {
+        qDebug()<<QHostAddress::Any;
+        qDebug()<<"Fail";
         QMessageBox::critical(this, tr("Server"), tr("Unable to start the server: %1.").arg(server->errorString()));
         return;
     }
+
     ui->lb_statemessage->setText(QString("Server Open : %1").arg(server->serverPort()));
 
 }
@@ -41,11 +61,8 @@ void Server::newConnection()
         QList<QTcpSocket*> values = buffers.keys();
         for (int i = 0; i < values.size(); ++i){
             qDebug() <<"Soket List:"<< values.at(i);
-
         }
-
         //ui->lw_clientlist->insertItem(values.size(),QString("%1").arg("values"));
-
     }
 }
 

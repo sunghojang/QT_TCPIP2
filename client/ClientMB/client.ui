@@ -24,7 +24,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>ip address</string>
+     <string>192.168.1.43</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="portLineEdit">

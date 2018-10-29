@@ -33,7 +33,7 @@ QString Client::get_ipaddress(){
     // if we did not find one, use IPv4 localhost
     if (ipAddress.isEmpty())
         ipAddress = QHostAddress(QHostAddress::LocalHost).toString();
-    ui->hostLineEdit->setText(ipAddress);
+    //ui->hostLineEdit->setText(ipAddress);
     return ipAddress;
 }
 
