@@ -38,6 +38,13 @@ private:
 public:
     explicit Server(QWidget *parent = 0);
     ~Server();
+     QList<QNetworkInterface> InterfaceList ;
+     QList<QNetworkAddressEntry> ipAddrList;
+     double cnt;
+private:
+    int get_interface();
+    int get_interface_ipaddress(int index);
+
 signals:
      void Signal_display(CommandData *arg);
 private slots:
@@ -46,6 +53,10 @@ private slots:
     void readyRead();
     void slot_receiveprocess(QByteArray);
     void slot_Display(CommandData *arg);
+    void on_lw_netseleect_clicked(const QModelIndex &index);
+
+    void on_button_serveropen_clicked();
+    void on_button_Serverclose_clicked();
 };
 
 #endif // SERVER_H

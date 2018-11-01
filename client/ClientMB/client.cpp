@@ -46,7 +46,7 @@ bool Client::connectToHost()
 
 bool Client::writeData(QByteArray data)
 {
-    qDebug() << "bool Client::writeData(QByteArray data)";
+    //qDebug() << "bool Client::writeData(QByteArray data)";
     if(socket->state() == QAbstractSocket::ConnectedState)
     {
         socket->write(IntToArray(data.size())); //write size of data
@@ -70,7 +70,7 @@ void Client::on_bt_bytearrysend_clicked()
 {
 //    QByteArray Data;
     QString myValue = "test";
-    qDebug()<<"struct size"<<sizeof(CommandData);
+    //qDebug()<<"struct size"<<sizeof(CommandData);
     cmmdata_tx->STX    = 0x8E;
     cmmdata_tx->host   = 0x01;
     cmmdata_tx->user   = "admin";
@@ -79,9 +79,10 @@ void Client::on_bt_bytearrysend_clicked()
     cmmdata_tx->ETX    = 0x8F;
 //    Data.contains(myValue.toAscii());
 //    writeData(IntToArray(sizeof(CommandData)));
-    qDebug() << sizeof(CommandData) ;
+    //qDebug() << sizeof(CommandData) ;
 //    writeData(cmmdata_tx->user.toAscii());
     writeData(parse(cmmdata_tx));
 //    writeData(cmmdata_tx->message.toAscii());
     //writeData(QByteArray::fromHex("01020304"));
+    on_bt_bytearrysend_clicked();
 }

@@ -47,6 +47,45 @@
      </rect>
     </property>
    </widget>
+   <widget class="QListWidget" name="lw_netseleect">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>55</y>
+      <width>276</width>
+      <height>141</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">font: 18pt;</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="button_serveropen">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>200</y>
+      <width>166</width>
+      <height>91</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>SERVER OPEN</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="button_Serverclose">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>295</y>
+      <width>276</width>
+      <height>66</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>DONE</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
