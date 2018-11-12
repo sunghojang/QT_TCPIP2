@@ -70,9 +70,9 @@ void Client::on_bt_bytearrysend_clicked()
 {
 //    QByteArray Data;
     QString myValue = "test";
-    //qDebug()<<"struct size"<<sizeof(CommandData);
+    qDebug()<<"Send Command";
     cmmdata_tx->STX    = 0x8E;
-    cmmdata_tx->host   = 0x01;
+    cmmdata_tx->host   = 0x03;
     cmmdata_tx->user   = "admin";
     cmmdata_tx->cmm    = 0x02;
     cmmdata_tx->message= "client to server message";
@@ -84,5 +84,6 @@ void Client::on_bt_bytearrysend_clicked()
     writeData(parse(cmmdata_tx));
 //    writeData(cmmdata_tx->message.toAscii());
     //writeData(QByteArray::fromHex("01020304"));
+    sleep(1);
     on_bt_bytearrysend_clicked();
 }

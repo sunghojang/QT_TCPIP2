@@ -14,7 +14,7 @@ Server::Server(QWidget *parent) :
     cnt = 0;
     get_interface();
 
-/*
+    /*
     QString ipAddress;
     int seletip = 0;
         QList<QHostAddress> ipAddressesList = QNetworkInterface::allAddresses();
@@ -47,10 +47,10 @@ Server::~Server()
 void _______Server_init_______();
 int Server::get_interface(){
     InterfaceList = QNetworkInterface::allInterfaces();
-     for (int i = 0; i < InterfaceList.size(); ++i) {
-         qDebug()<<InterfaceList.at(i).name();
-         ui->lw_netseleect->insertItem(i,InterfaceList.at(i).name());
-     }
+    for (int i = 0; i < InterfaceList.size(); ++i) {
+        qDebug()<<InterfaceList.at(i).name();
+        ui->lw_netseleect->insertItem(i,InterfaceList.at(i).name());
+    }
 }
 void Server::on_lw_netseleect_clicked(const QModelIndex &index)
 {
@@ -68,11 +68,11 @@ void Server::on_button_serveropen_clicked()
 
 
     if (!server->listen(ipAddrList.at(0).ip(), 4002)) {
-            qDebug()<<ipAddrList.at(0).ip().toString();
-            qDebug()<<"Fail";
-            QMessageBox::critical(this, tr("Server"), tr("Unable to start the server: %1.").arg(server->errorString()));
-            return;
-        }
+        qDebug()<<ipAddrList.at(0).ip().toString();
+        qDebug()<<"Fail";
+        QMessageBox::critical(this, tr("Server"), tr("Unable to start the server: %1.").arg(server->errorString()));
+        return;
+    }
     qDebug()<<"OPEN";
     ui->lb_statemessage->setText(QString("Server Open : %1").arg(server->serverPort()));
 }
@@ -138,9 +138,9 @@ void Server::readyRead()
                 buffer->remove(0, size);
                 size = 0;
                 *s = size;
-//                qDebug() << data.toHex();
-//                QString DataAsString = QString::fromAscii(data.data());
-//                qDebug() << DataAsString;
+                //                qDebug() << data.toHex();
+                //                QString DataAsString = QString::fromAscii(data.data());
+                //                qDebug() << DataAsString;
                 slot_receiveprocess(data);
 
             }
@@ -237,28 +237,30 @@ void Server::slot_receiveprocess(QByteArray data){
 
 
     }
-//    qDebug() <<    cmmdata_rx->STX ;
-//    qDebug() <<    cmmdata_rx->host;
-//    qDebug() <<    cmmdata_rx->user ;
-//    qDebug() <<    cmmdata_rx->cmm ;
-//    qDebug() <<    cmmdata_rx->message ;
-//    qDebug() <<    cmmdata_rx->ETX ;
+    //    qDebug() <<    cmmdata_rx->STX ;
+    //    qDebug() <<    cmmdata_rx->host;
+    //    qDebug() <<    cmmdata_rx->user ;
+    //    qDebug() <<    cmmdata_rx->cmm ;
+    //    qDebug() <<    cmmdata_rx->message ;
+    //    qDebug() <<    cmmdata_rx->ETX ;
 }
 void Server::slot_Display(CommandData *arg){
     //qDebug()<<"void Server::slot_Display(CommandData *arg)";
 
-//    ui->te_diplaylog->append(QString("host num : %1").arg(cmmdata_rx->host));
+        ui->te_diplaylog->append(QString("host num : %1").arg(cmmdata_rx->host));
     //    ui->te_diplaylog->append(QString("user : %1").arg(cmmdata_rx->user));
     //    ui->te_diplaylog->append(QString("command : %1").arg(cmmdata_rx->cmm));
     //    ui->te_diplaylog->append(QString("message : %1").arg(cmmdata_rx->message));
-    }
-    void Server::on_button_Serverclose_clicked()
-    {
-        server->close();
-        system("killall udhcpd");
-        system("sh adhoc");
-        qDebug()<<"DDDDDDDDDDDDDDDDDOOOOOOOOOOOOOOOOOOOOOOOOONNNNNNNNNNNNNNNNNNEEEEEEEEEEEEEEEE"<<cnt;
-        if(cnt>10000000){
+}
+
+
+void Server::on_button_Serverclose_clicked()
+{
+    server->close();
+    system("killall udhcpd");
+    system("sh adhoc");
+    qDebug()<<"DDDDDDDDDDDDDDDDDOOOOOOOOOOOOOOOOOOOOOOOOONNNNNNNNNNNNNNNNNNEEEEEEEEEEEEEEEE"<<cnt;
+    if(cnt>10000000){
         cnt =0;
     }
 }
