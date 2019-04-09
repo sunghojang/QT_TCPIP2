@@ -4,8 +4,15 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui testlib
+
 QT           += network
+
+
+CONFIG += console
+CONFIG -= app_bundle
+TEMPLATE = app
+
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = ClientMB

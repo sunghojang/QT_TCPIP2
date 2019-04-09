@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'client.h'
 **
-** Created: Thu Aug 23 19:11:40 2018
+** Created: Mon Apr 8 17:48:29 2019
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.2)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -33,7 +33,7 @@ static const uint qt_meta_data_Client[] = {
  // slots: signature, parameters, type, tag, flags
       13,    7,    8,    7, 0x0a,
       34,   29,    8,    7, 0x0a,
-      56,    7,    7,    7, 0x08,
+      56,    7,    7,    7, 0x0a,
 
        0        // eod
 };

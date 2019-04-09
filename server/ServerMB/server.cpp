@@ -166,6 +166,7 @@ void Server::slot_receiveprocess(QByteArray data){
         case en_STX:
             sftbyte = 4;
             temp4byte = ArrayToInt(data.mid(0, sftbyte));
+            qDebug("s[%x]",temp4byte);
             data.remove(0,sftbyte);
             if(temp4byte == 0x8E){
                 cmmdata_rx->STX = temp4byte;
@@ -175,6 +176,7 @@ void Server::slot_receiveprocess(QByteArray data){
         case en_host:
             sftbyte = 4;
             temp4byte = ArrayToInt(data.mid(0, sftbyte));
+            qDebug("1[%x]",temp4byte);
             data.remove(0,sftbyte);
 
             cmmdata_rx->host = temp4byte;
@@ -184,6 +186,7 @@ void Server::slot_receiveprocess(QByteArray data){
         case en_user:
             sftbyte = 4;
             temp4byte = ArrayToInt(data.mid(0, sftbyte));
+            qDebug("2[%x]",temp4byte);
             data.remove(0,sftbyte);
             sftbyte = temp4byte;
 
@@ -197,6 +200,7 @@ void Server::slot_receiveprocess(QByteArray data){
         case en_cmm:
             sftbyte = 4;
             temp4byte = ArrayToInt(data.mid(0, sftbyte));
+            qDebug("3[%x]",temp4byte);
             data.remove(0,sftbyte);
 
             cmmdata_rx->cmm = temp4byte;
@@ -207,6 +211,7 @@ void Server::slot_receiveprocess(QByteArray data){
         case en_message:
             sftbyte = 4;
             temp4byte = ArrayToInt(data.mid(0, sftbyte));
+            qDebug("4[%x]",temp4byte);
             data.remove(0,sftbyte);
             sftbyte = temp4byte;
 
@@ -220,6 +225,7 @@ void Server::slot_receiveprocess(QByteArray data){
         case en_ETX:
             sftbyte = 4;
             temp4byte = ArrayToInt(data.mid(0, sftbyte));
+            qDebug("e[%x]",temp4byte);
             data.remove(0,sftbyte);
             if(temp4byte == 0x8F){
                 cmmdata_rx->ETX = temp4byte;
@@ -248,9 +254,9 @@ void Server::slot_Display(CommandData *arg){
     //qDebug()<<"void Server::slot_Display(CommandData *arg)";
 
         ui->te_diplaylog->append(QString("host num : %1").arg(cmmdata_rx->host));
-    //    ui->te_diplaylog->append(QString("user : %1").arg(cmmdata_rx->user));
-    //    ui->te_diplaylog->append(QString("command : %1").arg(cmmdata_rx->cmm));
-    //    ui->te_diplaylog->append(QString("message : %1").arg(cmmdata_rx->message));
+        ui->te_diplaylog->append(QString("user : %1").arg(cmmdata_rx->user));
+        ui->te_diplaylog->append(QString("command : %1").arg(cmmdata_rx->cmm));
+        ui->te_diplaylog->append(QString("message : %1").arg(cmmdata_rx->message));
 }
 
 

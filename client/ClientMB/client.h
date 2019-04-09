@@ -9,6 +9,7 @@
 #include <QDebug>
 #include <QtNetwork>
 #include <QPushButton>
+
 namespace Ui {
 class Client;
 }
@@ -45,12 +46,17 @@ public:
                    ;
         return data;
     }
+    QString sum(QString);
 public slots:
     bool connectToHost();
     bool writeData(QByteArray data);
+    void on_bt_bytearrysend_clicked();
 
 private slots:
-    void on_bt_bytearrysend_clicked();
+
+
+
+
 
 private:
     Ui::Client *ui;

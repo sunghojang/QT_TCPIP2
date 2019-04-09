@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'client.ui'
 **
-** Created: Thu Oct 25 17:59:28 2018
+** Created: Mon Apr 8 17:48:25 2019
 **      by: Qt User Interface Compiler version 4.8.2
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -76,7 +76,7 @@ public:
     void retranslateUi(QMainWindow *Client)
     {
         Client->setWindowTitle(QApplication::translate("Client", "Client", 0, QApplication::UnicodeUTF8));
-        hostLineEdit->setText(QApplication::translate("Client", "192.168.1.43", 0, QApplication::UnicodeUTF8));
+        hostLineEdit->setText(QApplication::translate("Client", "192.168.1.55", 0, QApplication::UnicodeUTF8));
         portLineEdit->setText(QApplication::translate("Client", "4002", 0, QApplication::UnicodeUTF8));
         bt_hostconnect->setText(QApplication::translate("Client", "Connect", 0, QApplication::UnicodeUTF8));
         bt_bytearrysend->setText(QApplication::translate("Client", "SEND", 0, QApplication::UnicodeUTF8));

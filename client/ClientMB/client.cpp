@@ -1,5 +1,6 @@
 #include "client.h"
 #include "ui_client.h"
+#include <QApplication>
 static inline QByteArray IntToArray(qint32 source);
 Client::Client(QWidget *parent) :
     QMainWindow(parent),
@@ -10,12 +11,19 @@ Client::Client(QWidget *parent) :
     cmmdata_tx = new CommandData();
     connect(ui->bt_hostconnect  ,SIGNAL(clicked(bool))  ,this,SLOT(connectToHost())             );
     get_ipaddress();
+
+
+
 }
 
 Client::~Client()
 {
     delete ui;
 }
+QString Client::sum(QString a){
+    return a;
+}
+
 QString Client::get_ipaddress(){
     QString ipAddress;
     QList<QHostAddress> ipAddressesList = QNetworkInterface::allAddresses();
@@ -72,7 +80,7 @@ void Client::on_bt_bytearrysend_clicked()
     QString myValue = "test";
     qDebug()<<"Send Command";
     cmmdata_tx->STX    = 0x8E;
-    cmmdata_tx->host   = 0x03;
+    cmmdata_tx->host   = 0x3A;
     cmmdata_tx->user   = "admin";
     cmmdata_tx->cmm    = 0x02;
     cmmdata_tx->message= "client to server message";
@@ -85,5 +93,7 @@ void Client::on_bt_bytearrysend_clicked()
 //    writeData(cmmdata_tx->message.toAscii());
     //writeData(QByteArray::fromHex("01020304"));
     sleep(1);
-    on_bt_bytearrysend_clicked();
+    //on_bt_bytearrysend_clicked();
 }
+
+
